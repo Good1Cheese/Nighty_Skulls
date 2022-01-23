@@ -1,15 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-public abstract class DirectionRotate : CoroutineUser, IPointerExitHandler, IPointerEnterHandler
+public abstract class DirectionRotate : CoroutineUser
 {
     [SerializeField] protected Rotator _rotator;
 
     protected float _maxRotateTime;
-
-    public void OnPointerEnter(PointerEventData eventData) => StartCoroutine();
-
-    public void OnPointerExit(PointerEventData eventData) => StopCoroutine();
 
     protected void SetMaxRotateTime(int rotatorCurveKeyFrameIndex)
     {

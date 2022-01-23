@@ -4,15 +4,7 @@ public class PlayerInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-        BindPhoneActivator();
         BindRotetes();
-    }
-
-    private void BindPhoneActivator()
-    {
-        var phoneActivator = GetComponent<PhoneActivator>();
-        Container.BindInstance(phoneActivator)
-            .AsSingle();
     }
 
     private void BindRotetes()
@@ -23,6 +15,10 @@ public class PlayerInstaller : MonoInstaller
 
         var leftRotate = GetComponent<LeftRotate>();
         Container.BindInstance(leftRotate)
+            .AsSingle();
+
+        var backRotate = GetComponent<BackRotate>();
+        Container.BindInstance(backRotate)
             .AsSingle();
     }
 }

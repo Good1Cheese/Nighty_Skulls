@@ -3,14 +3,14 @@ using UnityEngine;
 
 public abstract class CoroutineUser : MonoBehaviour
 {
-    private IEnumerator _enumerator;
+    protected IEnumerator _enumerator;
 
     protected void Start()
     {
         _enumerator = Coroutine();
     }
 
-    protected void StartCoroutineWithInterrupt()
+    public virtual void StartCoroutineWithInterrupt()
     {
         StopCoroutine();
         StartCoroutine();

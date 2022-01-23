@@ -1,6 +1,7 @@
-﻿using Zenject;
+﻿using System;
+using Zenject;
 
-public class PhoneDisplayActivator : Activator
+public class PhoneDisplayActivator : GameObjectActivator
 {
     [Inject] private readonly PhoneActivator _phoneActivator;
 

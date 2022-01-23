@@ -4,6 +4,7 @@ using UnityEngine;
 public class PhoneActivator : MonoBehaviour
 {
     public bool Active { get; private set; }
+
     public Action Activated { get; set; }
     public Action Deactivated { get; set; }
 
