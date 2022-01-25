@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PhoneLight : PhoneChargeUser
+public class PhoneLightEnabler : PhoneChargeUser
 {
     [SerializeField] private KeyCode _key;
     [SerializeField] private GameObject _activable;

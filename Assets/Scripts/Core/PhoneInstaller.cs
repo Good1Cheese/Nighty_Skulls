@@ -8,17 +8,14 @@ public class PhoneInstaller : MonoInstaller
         BindPhoneCharge();
     }
 
-    private void BindPhoneCharge()
-    {
-        var phoneCharge = GetComponent<PhoneCharge>();
-        Container.BindInstance(phoneCharge)
-            .AsSingle();
-    }
-
     private void BindPhoneActivator()
     {
-        var phoneActivator = GetComponent<PhoneActivator>();
-        Container.BindInstance(phoneActivator)
+        Container.BindInstance(GetComponent<PhoneEnabler>())
+            .AsSingle();
+    }
+    private void BindPhoneCharge()
+    {
+        Container.BindInstance(GetComponent<PhoneCharge>())
             .AsSingle();
     }
 }

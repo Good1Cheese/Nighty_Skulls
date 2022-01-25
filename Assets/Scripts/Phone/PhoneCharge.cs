@@ -12,7 +12,7 @@ public class PhoneCharge : MonoBehaviour
     public bool HasCharge { get; set; } = true;
     public Action ChargeOut { get; set; }
 
-    private void Start()
+    private void Awake()
     {
         StartCoroutine(UpdateCharge());
     }

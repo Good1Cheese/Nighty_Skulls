@@ -4,7 +4,7 @@ using Zenject;
 
 public class PhoneUIActivator : MonoBehaviour, IPointerEnterHandler
 {
-    [Inject] private readonly PhoneActivator _phoneActivator;
+    [Inject] private readonly PhoneEnabler _phoneActivator;
 
     public void OnPointerEnter(PointerEventData eventData)
     {

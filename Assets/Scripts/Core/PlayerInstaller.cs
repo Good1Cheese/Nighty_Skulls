@@ -9,16 +9,16 @@ public class PlayerInstaller : MonoInstaller
 
     private void BindRotetes()
     {
-        var rightRotate = GetComponent<RightRotate>();
-        Container.BindInstance(rightRotate)
+        Container.BindInstance(GetComponent<LeftRotate>())
             .AsSingle();
 
-        var leftRotate = GetComponent<LeftRotate>();
-        Container.BindInstance(leftRotate)
+        Container.BindInstance(GetComponent<RightRotate>())
             .AsSingle();
 
-        var backRotate = GetComponent<BackRotate>();
-        Container.BindInstance(backRotate)
+        Container.BindInstance(GetComponent<BackRotate>())
+            .AsSingle();
+
+        Container.BindInstance(GetComponent<Rotator>())
             .AsSingle();
     }
 }

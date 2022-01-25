@@ -5,35 +5,33 @@ public abstract class MultipleCurveUser : CoroutineUser
 {
     [SerializeField] protected Transform _transform;
 
-    [SerializeField] private AnimationCurve _firstCurve;
-    [SerializeField] private AnimationCurve _secondCurve;
+    [SerializeField] protected AnimationCurve _firstCurve;
+    [SerializeField] protected AnimationCurve _secondCurve;
 
-    private float _targetCurveTime;
+    private float _maxCurveTime;
+    protected bool _firstCurveUsed;
+    protected Keyframe _newStartKeyFrame;
     protected AnimationCurve _currentCurve;
-    private Keyframe _newStartKeyFrame;
 
-    private bool _firstCurveUsed;
-
-    private new void Start()
+    protected void Awake()
     {
-        base.Start();
-        _targetCurveTime = _firstCurve.GetLastKeyframe().time;
+        _maxCurveTime = _firstCurve.GetLastKeyframe().time;
     }
 
     public override void StartCoroutineWithInterrupt()
     {
         _firstCurveUsed = !_firstCurveUsed;
         _currentCurve = _firstCurveUsed ? _firstCurve : _secondCurve;
+        SetFirstKeyFrameCurrentPositiion();
 
         base.StartCoroutineWithInterrupt();
     }
 
     public override IEnumerator Coroutine()
     {
-        SetFirstKeyFrameCurrentPositiion();
         float curveTime = 0;
 
-        while (curveTime < _targetCurveTime)
+        while (curveTime < _maxCurveTime)
         {
             curveTime += Time.deltaTime;
             DoAction(curveTime);
@@ -42,7 +40,7 @@ public abstract class MultipleCurveUser : CoroutineUser
         }
     }
 
-    private void SetFirstKeyFrameCurrentPositiion()
+    protected virtual void SetFirstKeyFrameCurrentPositiion()
     {
         _newStartKeyFrame.value = CurrentCurveValue;
         _currentCurve.MoveKey(0, _newStartKeyFrame);

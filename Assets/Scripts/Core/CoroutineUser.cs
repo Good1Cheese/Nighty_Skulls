@@ -22,7 +22,6 @@ public abstract class CoroutineUser : MonoBehaviour
         StartCoroutine(_enumerator);
     }
 
-
     public void StopCoroutine()
     {
         StopCoroutine(_enumerator);

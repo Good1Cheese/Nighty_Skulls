@@ -5,17 +5,16 @@ using Zenject;
 public class PhoneAppSwitch : MonoBehaviour
 {
     [SerializeField] private KeyCode _key;
-    [SerializeField] private PhoneAppActivator[] _apps;
+    [SerializeField] private PhoneAppEnabler[] _appEnablers;
 
-    [Inject] private readonly PhoneActivator _phoneActivator;
+    [Inject] private readonly PhoneEnabler _phoneEnabler;
 
     private int _activeAppIndex;
 
     private void Start()
     {
-        gameObject.SetActive(false);
-        _phoneActivator.Activated += ActivateCurrent;
-        _phoneActivator.Deactivated += DeactivateCurrent;
+        _phoneEnabler.Enabled += ActivateCurrent;
+        _phoneEnabler.Disabled += DeactivateCurrent;
     }
 
     private void Update()
@@ -27,31 +26,38 @@ public class PhoneAppSwitch : MonoBehaviour
 
     private void SwitchApp()
     {
-        _activeAppIndex = Array.FindIndex(_apps, app => app.Active);
-        _apps[_activeAppIndex].Deactivate();
+        _activeAppIndex = Array.FindIndex(_appEnablers, app => app.IsEnabled);
+        _appEnablers[_activeAppIndex].Deactivate();
 
         ActivateNextApp();
     }
 
     private void ActivateNextApp()
     {
-        _activeAppIndex = Array.FindIndex(_apps,
+        _activeAppIndex = Array.FindIndex(_appEnablers,
                                           _activeAppIndex + 1,
-                                          (app) => !app.Active);
+                                          (app) => !app.IsEnabled);
         if (_activeAppIndex == -1)
         {
             _activeAppIndex = 0;
         }
 
-        _apps[_activeAppIndex].Activate();
+        _appEnablers[_activeAppIndex].Activate();
     }
 
-    private void ActivateCurrent() => _apps[_activeAppIndex].Activate();
-    private void DeactivateCurrent() => _apps[_activeAppIndex].Deactivate();
+    private void ActivateCurrent()
+    {
+        _appEnablers[_activeAppIndex].Activate();
+    }
+
+    private void DeactivateCurrent()
+    {
+        _appEnablers[_activeAppIndex].Deactivate();
+    }
 
     private void OnDestroy()
     {
-        _phoneActivator.Activated -= ActivateCurrent;
-        _phoneActivator.Deactivated -= DeactivateCurrent;
+        _phoneEnabler.Enabled -= ActivateCurrent;
+        _phoneEnabler.Disabled -= DeactivateCurrent;
     }
 }

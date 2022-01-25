@@ -4,10 +4,13 @@ using Zenject;
 
 public class BackRotateUIActivator : MonoBehaviour, IPointerEnterHandler
 {
-    [Inject] private readonly BackRotate _backwardsRotate;
+    [Inject] private readonly BackRotate _backRotate;
+
+    public bool Activated { get; private set; }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _backwardsRotate.StartCoroutineWithInterrupt();
+        Activated = !Activated;
+        _backRotate.StartCoroutineWithInterrupt();
     }
 }

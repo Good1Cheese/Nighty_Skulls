@@ -1,19 +1,20 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class LeftRotate : DirectionRotate
+public class LeftRotate : StaticCoroutineUser
 {
-    private new void Start()
+    [SerializeField] private Rotator _rotator;
+
+    private void Awake()
     {
-        base.Start();
-        SetMaxRotateTime(_rotator.RotationCurve.length - 1);
+        _targetTime = _rotator.RotateCurve.GetLastKeyframe().time;
     }
 
     public override IEnumerator Coroutine()
     {
-        while (_rotator.RotationTime < _maxRotateTime)
+        while (_rotator.CurveTime < _targetTime)
         {
-            _rotator.Rotate(_rotator.RotationTime + Time.deltaTime);
+            _rotator.CurveTime += Time.deltaTime;
             yield return null;
         }
     }

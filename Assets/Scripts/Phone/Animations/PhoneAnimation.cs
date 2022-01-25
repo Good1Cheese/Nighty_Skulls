@@ -3,16 +3,17 @@ using Zenject;
 
 public class PhoneAnimation : MultipleCurveUser
 {
-    [Inject] protected readonly PhoneActivator _phoneActivator;
+    [Inject] protected readonly PhoneEnabler _phoneEnabler;
 
     private Vector3 _newPosition;
 
     protected override float CurrentCurveValue => _transform.localPosition.y;
 
-    private void Awake()
+    private new void Start()
     {
-        _phoneActivator.Activated += StartCoroutineWithInterrupt;
-        _phoneActivator.Deactivated += StartCoroutineWithInterrupt;
+        base.Start();
+        _phoneEnabler.Enabled += StartCoroutineWithInterrupt;
+        _phoneEnabler.Disabled += StartCoroutineWithInterrupt;
     }
 
     protected override void DoAction(float curveTime)
@@ -20,17 +21,10 @@ public class PhoneAnimation : MultipleCurveUser
         _newPosition.y = _currentCurve.Evaluate(curveTime);
         transform.localPosition = _newPosition;
     }
-    
-    public override void StartCoroutineWithInterrupt()
-    {
-        _phoneActivator.StopCoroutine(_enumerator);
-        _enumerator = Coroutine();
-        _phoneActivator.StartCoroutine(_enumerator);
-    }
 
     private void OnDestroy()
     {
-        _phoneActivator.Activated += StartCoroutineWithInterrupt;
-        _phoneActivator.Deactivated += StartCoroutineWithInterrupt;
+        _phoneEnabler.Enabled += StartCoroutineWithInterrupt;
+        _phoneEnabler.Disabled += StartCoroutineWithInterrupt;
     }
 }
