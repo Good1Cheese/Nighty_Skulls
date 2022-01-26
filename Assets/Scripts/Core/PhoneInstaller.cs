@@ -4,15 +4,16 @@ public class PhoneInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-        BindPhoneActivator();
+        BindPhoneEnabler();
         BindPhoneCharge();
     }
 
-    private void BindPhoneActivator()
+    private void BindPhoneEnabler()
     {
         Container.BindInstance(GetComponent<PhoneEnabler>())
             .AsSingle();
     }
+
     private void BindPhoneCharge()
     {
         Container.BindInstance(GetComponent<PhoneCharge>())

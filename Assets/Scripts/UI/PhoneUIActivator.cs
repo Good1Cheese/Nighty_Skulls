@@ -8,6 +8,11 @@ public class PhoneUIActivator : MonoBehaviour, IPointerEnterHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        _phoneActivator.Toggle();
+        if (_phoneActivator.IsEnabled)
+        {
+            _phoneActivator.Disable();
+            return;
+        }
+        _phoneActivator.Enable();
     }
 }

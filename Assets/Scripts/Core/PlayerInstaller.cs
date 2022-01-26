@@ -1,3 +1,5 @@
+using System;
+using UnityEngine;
 using Zenject;
 
 public class PlayerInstaller : MonoInstaller
@@ -5,6 +7,7 @@ public class PlayerInstaller : MonoInstaller
     public override void InstallBindings()
     {
         BindRotetes();
+        BindHealth();
     }
 
     private void BindRotetes()
@@ -19,6 +22,12 @@ public class PlayerInstaller : MonoInstaller
             .AsSingle();
 
         Container.BindInstance(GetComponent<Rotator>())
+            .AsSingle();
+    }
+
+    private void BindHealth()
+    {
+        Container.BindInstance(GetComponent<Health>())
             .AsSingle();
     }
 }

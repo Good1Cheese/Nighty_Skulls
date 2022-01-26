@@ -6,14 +6,27 @@ public class PhoneCharge : MonoBehaviour
 {
     [SerializeField] private AnimationCurve _chargeCurve;
 
-    private float _chargeTime;
     private int _wasteSourceCount = 1;
+    private float _chargeCurveTime;
 
-    public bool HasCharge { get; set; } = true;
+    public float ChargeCurveTime
+    {
+        get => _chargeCurveTime;
+        private set
+        {
+            _chargeCurveTime = value;
+            _chargeCurve.Evaluate(ChargeCurveTime);
+            Changed?.Invoke();
+        }
+    }
+
+    public bool HasCharge { get; private set; } = true;
     public Action ChargeOut { get; set; }
+    public Action Changed { get; set; }
 
     private void Awake()
     {
+        ChargeCurveTime = _chargeCurve.keys[_chargeCurve.length - 1].time;
         StartCoroutine(UpdateCharge());
     }
 
@@ -22,12 +35,9 @@ public class PhoneCharge : MonoBehaviour
 
     private IEnumerator UpdateCharge()
     {
-        float totalChargeTime = _chargeCurve.keys[_chargeCurve.length - 1].time;
-
-        while (_chargeTime < totalChargeTime)
+        while (_chargeCurveTime > 0)
         {
-            _chargeTime += Time.deltaTime * _wasteSourceCount;
-            _chargeCurve.Evaluate(_chargeTime);
+            ChargeCurveTime -= Time.deltaTime * _wasteSourceCount;
 
             yield return null;
         }

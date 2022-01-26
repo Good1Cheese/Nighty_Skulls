@@ -1,15 +1,14 @@
 using System;
-using UnityEngine;
 
-public class PhoneEnabler : MonoBehaviour
+public class PhoneEnabler : PhoneFunctionEnabler
 {
     public bool IsEnabled { get; private set; }
     public Action Enabled { get; set; }
     public Action Disabled { get; set; }
 
-    public void Toggle()
+    protected override void Toggle(bool value)
     {
-        IsEnabled = !IsEnabled;
+        IsEnabled = value;
 
         if (IsEnabled)
         {

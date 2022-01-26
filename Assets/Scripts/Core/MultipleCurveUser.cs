@@ -10,7 +10,7 @@ public abstract class MultipleCurveUser : CoroutineUser
 
     private float _maxCurveTime;
     protected bool _firstCurveUsed;
-    protected Keyframe _newStartKeyFrame;
+    protected Keyframe _firstCurveKeyFrame;
     protected AnimationCurve _currentCurve;
 
     protected void Awake()
@@ -42,8 +42,8 @@ public abstract class MultipleCurveUser : CoroutineUser
 
     protected virtual void SetFirstKeyFrameCurrentPositiion()
     {
-        _newStartKeyFrame.value = CurrentCurveValue;
-        _currentCurve.MoveKey(0, _newStartKeyFrame);
+        _firstCurveKeyFrame.value = CurrentCurveValue;
+        _currentCurve.MoveKey(0, _firstCurveKeyFrame);
     }
 
     protected abstract void DoAction(float curveTime);

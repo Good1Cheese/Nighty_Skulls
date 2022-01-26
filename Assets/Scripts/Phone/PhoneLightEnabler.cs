@@ -1,31 +1,29 @@
 using UnityEngine;
 
-public class PhoneLightEnabler : PhoneChargeUser
+public class PhoneLightEnabler : PhoneFunctionEnabler
 {
     [SerializeField] private KeyCode _key;
     [SerializeField] private GameObject _activable;
+
+    public bool Enabled { get; private set; }
 
     private void Update()
     {
         if (!Input.GetKeyDown(_key)) { return; }
 
-        StartUse();
+        Enable();
     }
 
     private void LateUpdate()
     {
         if (!Input.GetKeyUp(_key)) { return; }
 
-        EndUse();
+        Disable();
     }
 
-    protected override void Activate()
+    protected override void Toggle(bool value)
     {
-        _activable.SetActive(true);
-    }
-
-    protected override void Deactivate()
-    {
-        _activable.SetActive(false);
+        Enabled = value;
+        _activable.SetActive(Enabled);
     }
 }

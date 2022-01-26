@@ -7,14 +7,14 @@ public class BackRotate : MultipleCurveUser
 
     private Quaternion _newRotation;
     private float _oldYRotation;
-    private Keyframe _lastPointKeyFrame;
+    private Keyframe _secondCurveKeyFrame;
 
     protected override float CurrentCurveValue => _transform.eulerAngles.y;
 
     private new void Awake()
     {
         base.Awake();
-        _lastPointKeyFrame.time = _secondCurve.GetLastKeyframe().time;
+        _secondCurveKeyFrame.time = _secondCurve.GetLastKeyframe().time;
     }
 
     private new void Start()
@@ -39,8 +39,8 @@ public class BackRotate : MultipleCurveUser
             return;
         }
 
-        _lastPointKeyFrame.value = _oldYRotation;
-        _currentCurve.MoveKey(_currentCurve.length - 1, _lastPointKeyFrame);
+        _secondCurveKeyFrame.value = _oldYRotation;
+        _currentCurve.MoveKey(_currentCurve.length - 1, _secondCurveKeyFrame);
     }
 
     private void OnDestroy()
